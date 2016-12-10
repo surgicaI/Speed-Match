@@ -17,7 +17,9 @@ public class MyFirstGame extends ApplicationAdapter {
     public static final int SCORE_POSITION = 50;
     public static final int STATE_STOPPED = -1;
     public static final int STATE_GAME_ON = 1;
+    public static final int STATE_GAME_INIT = 0;
     public static final float SINGLE_GAME_TIME = 60f;
+    public static final float GAME_INIT_TIME = 1.5f;
     public static final float HELP_SHOW_TIME = 8f;
 	SpriteBatch batch;
 	Texture img;
@@ -39,10 +41,10 @@ public class MyFirstGame extends ApplicationAdapter {
 	Texture match_button, do_not_match_button,play_button, help_button,logo;
     Rectangle matchRect, doNotMatchRect,playRect,helpRect;
     int gameState;
-    float timer,timerWidth, helpTimer;
+    float timer,timerWidth, helpTimer, gameInitTimer;
     int[] scoreHeightWidthTuple;
-    float scoreMultiplierWidth,scoreMultiplierHeight;
-    String scoreMultiplierString;
+    float scoreMultiplierWidth,scoreMultiplierHeight,rememberStringWidth, alwaysInstructionStringWidth;
+    String scoreMultiplierString, rememberString, alwaysInstructionString;
     String[] instructions = new String[4];
     float[] instruction_width = new float[4];
     float logoHeight,logo_position_y;
@@ -86,8 +88,9 @@ public class MyFirstGame extends ApplicationAdapter {
         gameState = STATE_STOPPED;
         timer = 0f;
         scoreHeightWidthTuple = new int[3];
-        initHelpStrings();
+        initAllStrings();
         helpTimer = 0f;
+        gameInitTimer = GAME_INIT_TIME;
         logoHeight = 450;
         logo_position_y = Card.selectedCardPosition_y + Card.mCardHeight;
         logo_position_y = logo_position_y + (camera.viewportHeight-logo_position_y-logoHeight)/2;
@@ -104,13 +107,23 @@ public class MyFirstGame extends ApplicationAdapter {
             Vector2 touchPoint = new Vector2(Gdx.input.getX(),camera.viewportHeight-Gdx.input.getY());
             if(playRect.contains(touchPoint)) {
                 Gdx.input.vibrate(5);
-                startGame();
+                initGame();
             }else if(helpRect.contains(touchPoint)){
                 Gdx.input.vibrate(5);
                 helpTimer = HELP_SHOW_TIME;
             }
         }
-        if(gameState==STATE_GAME_ON) {
+        if(gameState==STATE_GAME_INIT) {
+            gameInitTimer -= Gdx.graphics.getDeltaTime();
+            handleInitState();
+            if(gameInitTimer<=0){
+                previousId = Card.selectedCardImageId;
+                isTouched = true;
+                updateCards();
+                isTouched = false;
+                startGame();
+            }
+        }else if(gameState==STATE_GAME_ON) {
             handleTimer();
             if(gameState==STATE_STOPPED){
                 gameOver();
@@ -126,6 +139,7 @@ public class MyFirstGame extends ApplicationAdapter {
                 updateScoreAndTimer();
                 drawTickOrCross();
                 drawMatchButtons();
+                drawAlwaysInstructionString();
             }
         }else if(gameState==STATE_STOPPED){
             handleStoppedState();
@@ -278,12 +292,14 @@ public class MyFirstGame extends ApplicationAdapter {
         }
     }
 
-    public void initHelpStrings(){
+    public void initAllStrings(){
         GlyphLayout glyphLayout = new GlyphLayout();
         instructions[0] = "-Instructions";
         instructions[1] = "\nIf the current card matches previous";
         instructions[2] = "\n\ncard tap YES, otherwise tap NO.";
         instructions[3] = "\n\n\nYou have 1 minute. GO!";
+        rememberString = "Remember the card" ;
+        alwaysInstructionString = "Does the card matches previous card?";
         int index = 0;
         for(String instruction: instructions) {
             glyphLayout.reset();
@@ -291,12 +307,31 @@ public class MyFirstGame extends ApplicationAdapter {
             instruction_width[index] = glyphLayout.width;
             index++;
         }
+        glyphLayout.reset();
+        glyphLayout.setText(font,rememberString);
+        rememberStringWidth = glyphLayout.width;
+        glyphLayout.reset();
+        glyphLayout.setText(font,alwaysInstructionString);
+        alwaysInstructionStringWidth = glyphLayout.width;
     }
 
     public void showHelp(){
         for(int index = 0;index<4;index++){
             font.draw(batch,instructions[index],(camera.viewportWidth-instruction_width[index])/2,playRect.getY()-50);
         }
+    }
+
+    public void initGame(){
+        gameState = STATE_GAME_INIT;
+        gameInitTimer = GAME_INIT_TIME;
+    }
+
+    public void handleInitState(){
+        font.draw(batch,rememberString,(camera.viewportWidth-rememberStringWidth)/2,playRect.getY()-50);
+    }
+
+    public void drawAlwaysInstructionString(){
+        font.draw(batch,alwaysInstructionString,(camera.viewportWidth-alwaysInstructionStringWidth)/2,matchRect.getY()+matchRect.getHeight()+200);
     }
 
 }
