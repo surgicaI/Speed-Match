@@ -22,7 +22,6 @@ public class MyFirstGame extends ApplicationAdapter {
     public static final float GAME_INIT_TIME = 1.5f;
     public static final float HELP_SHOW_TIME = 8f;
 	SpriteBatch batch;
-	Texture img;
     Texture background;
 	OrthographicCamera camera;
     Array<Card> mCards;
@@ -66,7 +65,6 @@ public class MyFirstGame extends ApplicationAdapter {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,1440,2560);
 		Gdx.gl.glClearColor(1, 1, 1, 1);
-		img = new Texture("myImg.png");
         background = new Texture("bg.jpg");
         tick = new Texture("tick.png");
         cross = new Texture("cross.png");
@@ -151,11 +149,17 @@ public class MyFirstGame extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-        img.dispose();
         background.dispose();
         do_not_match_button.dispose();
         match_button.dispose();
         play_button.dispose();
+        help_button.dispose();
+        logo.dispose();
+        font.dispose(); ;
+        scoreMultiplierFont.dispose();
+        finalScoreFont.dispose();
+        tick.dispose();
+        cross.dispose();
 	}
 
     public void updateCards(){
