@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.MathUtils;
  */
 
 public class Card {
-    public static final int MAX_IMAGES = 4;
+    public static final int MAX_IMAGES = 5;
     public static final int MAX_VELOCITY_X = -6000;
     public static int selectedCardImageId = 0;
     public static int nonSelectedCardImageId = 0;
