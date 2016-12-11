@@ -300,7 +300,7 @@ public class MyFirstGame extends ApplicationAdapter {
 
     public void initAllStrings(){
         GlyphLayout glyphLayout = new GlyphLayout();
-        instructions[0] = "-Instructions";
+        instructions[0] = "Instructions";
         instructions[1] = "\nIf the current card matches previous";
         instructions[2] = "\n\ncard tap YES, otherwise tap NO.";
         instructions[3] = "\n\n\nYou have 1 minute. GO!";
