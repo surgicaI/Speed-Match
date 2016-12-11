@@ -258,6 +258,8 @@ public class MyFirstGame extends ApplicationAdapter {
     public void startGame(){
         gameState = STATE_GAME_ON;
         timer = SINGLE_GAME_TIME;
+        timeForCross = 0;
+        timeForTick = 0;
         score = 0;
         scoreStringBuilder.replace(7,scoreStringBuilder.length, Integer.toString(score));
     }
