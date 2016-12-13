@@ -18,7 +18,7 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.first.game"
+        applicationId "com.speedmatch.game"
         minSdkVersion 8
         targetSdkVersion 25
     }
