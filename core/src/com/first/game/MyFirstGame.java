@@ -102,7 +102,7 @@ public class MyFirstGame extends ApplicationAdapter {
 		batch.begin();
         batch.draw(background,camera.position.x - background.getWidth()/2,camera.position.y - background.getHeight()/2);
         if(gameState==STATE_STOPPED && Gdx.input.justTouched()){
-            Vector2 touchPoint = new Vector2(Gdx.input.getX(),camera.viewportHeight-Gdx.input.getY());
+            Vector2 touchPoint = new Vector2(Gdx.input.getX()*camera.viewportWidth/Gdx.graphics.getWidth(),camera.viewportHeight-Gdx.input.getY()*camera.viewportHeight/Gdx.graphics.getHeight());
             if(playRect.contains(touchPoint)) {
                 Gdx.input.vibrate(5);
                 initGame();
@@ -179,13 +179,13 @@ public class MyFirstGame extends ApplicationAdapter {
     public void verifyResult(){
         boolean matched = previousId==currentId ;
         if(matched){
-            if(Gdx.input.getX()>=camera.viewportWidth/2){
+            if(Gdx.input.getX()*camera.viewportWidth/Gdx.graphics.getWidth()>=camera.viewportWidth/2){
                 correct();
             }else{
                 wrong();
             }
         }else{
-            if(Gdx.input.getX()>camera.viewportWidth/2){
+            if(Gdx.input.getX()*camera.viewportWidth/Gdx.graphics.getWidth()>camera.viewportWidth/2){
                 wrong();
             }else{
                 correct();
@@ -231,7 +231,7 @@ public class MyFirstGame extends ApplicationAdapter {
 
     public boolean isButonPressed(){
         if(!Gdx.input.justTouched()) return false;
-        Vector2 touchPoint = new Vector2(Gdx.input.getX(),camera.viewportHeight-Gdx.input.getY());
+        Vector2 touchPoint = new Vector2(Gdx.input.getX()*camera.viewportWidth/Gdx.graphics.getWidth(),camera.viewportHeight-Gdx.input.getY()*camera.viewportHeight/Gdx.graphics.getHeight());
         if(matchRect.contains(touchPoint) || doNotMatchRect.contains(touchPoint)) {
             Gdx.input.vibrate(5);
             return  !cardsMoving;
