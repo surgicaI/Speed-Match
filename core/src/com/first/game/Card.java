@@ -1,6 +1,5 @@
 package com.first.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -16,8 +15,8 @@ public class Card {
     public static final int MAX_VELOCITY_X = -6000;
     public static int selectedCardImageId = 0;
     public static int nonSelectedCardImageId = 0;
-    public static float mCardHeight = mCardHeight = Gdx.graphics.getHeight()/3f;;
-    public static float mCardWidth = mCardWidth = mCardHeight*0.9f ;;
+    public static float mCardHeight ;
+    public static float mCardWidth ;
     public float position_x, position_y;
     public static float selectedCardPosition_x,selectedCardPosition_y ;
     Sprite card;
@@ -25,7 +24,9 @@ public class Card {
     boolean isSelected = false;
     int imageId;
 
-    public Card(float center_x,float x, float y){
+    public Card(float center_x,float x, float y, float cardHeight){
+        mCardHeight = cardHeight;
+        mCardWidth = mCardHeight*0.9f ;
         reset(center_x,x,y);
     }
 

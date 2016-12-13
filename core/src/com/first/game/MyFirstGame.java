@@ -75,8 +75,8 @@ public class MyFirstGame extends ApplicationAdapter {
         logo = new Texture("logo.png");
         mCards = new Array<Card>();
         center_x = camera.viewportWidth/2;
-        mCards.add(new Card(center_x,camera.viewportWidth/2,camera.viewportHeight/2));
-        mCards.add(new Card(center_x,camera.viewportWidth*3/2,camera.viewportHeight/2));
+        mCards.add(new Card(center_x,camera.viewportWidth/2,camera.viewportHeight/2,camera.viewportHeight/3f));
+        mCards.add(new Card(center_x,camera.viewportWidth*3/2,camera.viewportHeight/2, camera.viewportHeight/3f));
         tickCrossPosition_x = Card.selectedCardPosition_x+Card.mCardWidth/2-cross.getWidth()/2;
         tickCrossPosition_y = Card.selectedCardPosition_y+Card.mCardHeight+cross.getHeight()/4;
         doNotMatchRect = new Rectangle(10,20,camera.viewportWidth/2-20,200);
